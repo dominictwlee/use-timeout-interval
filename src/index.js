@@ -26,10 +26,13 @@ export default function useTimeoutInterval(intervalCb, iDelay, tDelay, timeoutCb
   }, [iDelay, hasTimedOut]);
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      setHasTimedOut(true);
-      savedTimeoutCb.current && savedTimeoutCb.current();
-    }, tDelay);
+    let id;
+    if (tDelay != null) {
+      id = setTimeout(() => {
+        setHasTimedOut(true);
+        savedTimeoutCb.current && savedTimeoutCb.current();
+      }, tDelay);
+    }
     return () => {
       clearTimeout(id);
     };

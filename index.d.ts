@@ -4,6 +4,11 @@
  * @param iDelay Delay duration for interval in ms
  * @param tDelay Delay duration for timeout in ms
  */
-declare function useTimeoutInterval(intervalCb: () => void, iDelay: number, tDelay: number): void;
+declare function useTimeoutInterval(
+  intervalCb: () => void,
+  iDelay: number,
+  tDelay?: number,
+  timeoutCb?: () => void
+): void;
 
 export = useTimeoutInterval;
