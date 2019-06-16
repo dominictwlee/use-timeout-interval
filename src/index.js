@@ -15,7 +15,7 @@ export default function useTimeoutInterval(intervalCb, iDelay, timeoutCb, tDelay
 
   useEffect(() => {
     let id;
-    if (!hasTimedOut) {
+    if (!hasTimedOut && iDelay) {
       id = setInterval(() => {
         savedIntervalCb.current();
       }, iDelay);
