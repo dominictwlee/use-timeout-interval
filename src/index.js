@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function useTimeoutInterval(intervalCb, iDelay, tDelay, timeoutCb) {
+export default function useTimeoutInterval(intervalCb, iDelay, timeoutCb, tDelay) {
   const savedIntervalCb = useRef(intervalCb);
   const savedTimeoutCb = useRef(timeoutCb);
   const [hasTimedOut, setHasTimedOut] = useState(false);
