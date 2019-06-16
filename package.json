@@ -9,7 +9,18 @@
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "files": [
+    "src",
+    "dist",
+    "index.d.ts"
+  ],
+  "keywords": [
+    "react",
+    "react-hooks",
+    "timer",
+    "setInterval",
+    "setTimeout"
+  ],
   "author": "Dominic Lee",
   "license": "MIT",
   "devDependencies": {
