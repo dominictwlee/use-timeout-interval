@@ -12,4 +12,4 @@ declare function useTimeoutInterval(
   tDelay?: number
 ): void;
 
-export = useTimeoutInterval;
+export default useTimeoutInterval;

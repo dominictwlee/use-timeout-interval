@@ -7,7 +7,7 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "files": [
     "src",
@@ -25,7 +25,9 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
+    "@testing-library/react": "^8.0.1",
     "babel-eslint": "^10.0.1",
     "babel-preset-minify": "^0.5.0",
     "eslint": "^5.16.0",
@@ -34,14 +36,21 @@
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
+    "jest": "^24.8.0",
+    "jest-dom": "^3.5.0",
     "prettier": "^1.18.2",
     "react": "^16.8.0",
-    "react-hooks-testing-library": "^0.5.1",
+    "react-dom": "^16.8.6",
     "rollup": "^1.15.6",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-babel-minify": "^8.0.0"
   },
   "peerDependencies": {
     "react": "^16.8.0"
+  },
+  "dependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.8.0",
+    "react-test-renderer": "^16.8.6"
   }
 }
