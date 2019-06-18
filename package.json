@@ -1,7 +1,7 @@
 {
-  "name": "use-timeout-interval",
+  "name": "use-timeoutable-interval",
   "version": "0.1.0",
-  "description": "A hook that sets and cleans up timers",
+  "description": "A react hook to schedule and clear timed functions declaratively",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "index.d.ts",
@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "files": [
-    "src",
+    "src/index.js",
     "dist",
     "index.d.ts"
   ],

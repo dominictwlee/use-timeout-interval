@@ -1,11 +1,21 @@
 import React from 'react';
-import { render, act } from '@testing-library/react';
+import { render, act, fireEvent } from '@testing-library/react';
 
 import TestComponent from '../TestComponent';
 
 beforeEach(() => {
+  jest.useFakeTimers();
+});
+
+afterEach(() => {
   jest.clearAllTimers();
 });
+
+function repeat(num, cb) {
+  for (let i = 0; i < num; i++) {
+    cb();
+  }
+}
 
 test('Interval does not start without delay parameter', () => {
   const { getByTestId } = render(<TestComponent />);
@@ -13,18 +23,36 @@ test('Interval does not start without delay parameter', () => {
 });
 
 test('timeout function executed', () => {
-  jest.useFakeTimers();
-  const { getByTestId } = render(<TestComponent intervalDelay={200} timeoutDelay={900} />);
+  const { getByTestId } = render(<TestComponent />);
   act(() => jest.advanceTimersByTime(1000));
   expect(getByTestId('timeoutText')).toHaveTextContent('timed out');
 });
 
-test('interval function executed x times', () => {
-  jest.useFakeTimers();
-  const { getByTestId } = render(<TestComponent intervalDelay={200} timeoutDelay={900} />);
-  act(() => jest.advanceTimersByTime(200));
-  act(() => jest.advanceTimersByTime(200));
-  act(() => jest.advanceTimersByTime(200));
-  act(() => jest.advanceTimersByTime(200));
+test('interval function executes until time out', () => {
+  const { getByTestId } = render(<TestComponent />);
+  repeat(5, () => {
+    act(() => jest.advanceTimersByTime(200));
+  });
   expect(getByTestId('counterText')).toHaveTextContent('4');
+});
+
+test('Changing delay values restarts interval and timeout', () => {
+  const { getByTestId, getByText } = render(<TestComponent />);
+  const intervalButton = getByText(/interval/i);
+  const timeoutButton = getByText(/timeout/i);
+
+  repeat(6, () => {
+    act(() => jest.advanceTimersByTime(200));
+  });
+
+  expect(getByTestId('counterText')).toHaveTextContent('4');
+
+  fireEvent.click(intervalButton);
+  fireEvent.click(timeoutButton);
+
+  repeat(6, () => {
+    act(() => jest.advanceTimersByTime(100));
+  });
+
+  expect(getByTestId('counterText')).toHaveTextContent('9');
 });

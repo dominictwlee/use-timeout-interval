@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
-import useTimeoutInterval from './index';
+import useTimeoutableInterval from './index';
 
-const TestComponent = ({ intervalDelay, timeoutDelay }) => {
+const TestComponent = () => {
   const [counter, setCounter] = useState(0);
+  const [iDelay, setIDelay] = useState(200);
+  const [tDelay, setTDelay] = useState(800);
   const [timeoutMsg, setTimeoutMsg] = useState('');
 
-  useTimeoutInterval(
+  useTimeoutableInterval(
     () => {
       setCounter(counter + 1);
     },
-    intervalDelay,
+    iDelay,
     () => {
       setTimeoutMsg('timed out');
     },
-    timeoutDelay
+    tDelay
   );
 
   return (
     <div>
       <h1 data-testid="counterText">{counter}</h1>
       <h1 data-testid="timeoutText">{timeoutMsg}</h1>
+      <button onClick={() => setIDelay(100)}>Set Interval</button>
+      <button onClick={() => setTDelay(500)}>Set Timeout</button>
     </div>
   );
 };
