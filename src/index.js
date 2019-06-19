@@ -1,40 +1,77 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useReducer, useCallback } from 'react';
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'interval':
+      return { ...state, iDelay: action.payload };
+    case 'timeout':
+      return { ...state, tDelay: action.payload };
+    case 'hasTimedOut':
+      return { ...state, hasTimedOut: true };
+    case 'resetTimeOut':
+      return { ...state, hasTimedOut: false };
+    case 'clear':
+      return {
+        ...state,
+        iDelay: null,
+        tDelay: null,
+      };
+    default:
+      return state;
+  }
+}
 
 export default function useTimeoutableInterval(intervalCb, iDelay, timeoutCb, tDelay) {
   const savedIntervalCb = useRef(intervalCb);
   const savedTimeoutCb = useRef(timeoutCb);
-  const [hasTimedOut, setHasTimedOut] = useState(false);
+  const initialState = { iDelay, tDelay, hasTimedOut: false };
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const setDelay = useCallback((type, delay) => {
+    dispatch({ type, payload: delay });
+  }, []);
+
+  const clearAll = useCallback(() => {
+    dispatch({ type: 'clear' });
+  }, []);
 
   useEffect(() => {
     savedIntervalCb.current = intervalCb;
   }, [intervalCb]);
 
   useEffect(() => {
-    setHasTimedOut(false);
-  }, [iDelay, tDelay]);
+    dispatch({ type: 'resetTimeOut' });
+  }, [state.iDelay, state.tDelay]);
 
   useEffect(() => {
     let id;
-    if (!hasTimedOut && iDelay) {
+    if (!state.hasTimedOut && state.iDelay) {
       id = setInterval(() => {
         savedIntervalCb.current();
-      }, iDelay);
+      }, state.iDelay);
     }
     return () => {
       clearInterval(id);
     };
-  }, [iDelay, hasTimedOut]);
+  }, [state.iDelay, state.hasTimedOut]);
 
   useEffect(() => {
     let id;
-    if (tDelay != null) {
+    if (state.tDelay != null) {
       id = setTimeout(() => {
-        setHasTimedOut(true);
+        dispatch({ type: 'hasTimedOut' });
         savedTimeoutCb.current && savedTimeoutCb.current();
-      }, tDelay);
+      }, state.tDelay);
     }
     return () => {
       clearTimeout(id);
     };
-  }, [tDelay]);
+  }, [state.tDelay]);
+
+  return {
+    setDelay,
+    timeoutDelay: state.tDelay,
+    intervalDelay: state.iDelay,
+    clearAll,
+  };
 }

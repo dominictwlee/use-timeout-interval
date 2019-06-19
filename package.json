@@ -11,7 +11,7 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "lint": "eslint 'src/**/*.js'",
+    "lint": "eslint 'src/**/*.{js,ts}'",
     "test": "jest",
     "clean": "rimraf dist/",
     "prepublish": "npm test && npm run clean && npm run build"

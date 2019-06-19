@@ -36,6 +36,26 @@ test('interval function executes until time out', () => {
   expect(getByTestId('counterText')).toHaveTextContent('4');
 });
 
+test('Clear all stops all timed function executions', () => {
+  const { getByText, getByTestId } = render(<TestComponent />);
+  const clearAllButton = getByText(/clear/i);
+  const counterText = getByTestId('counterText');
+
+  repeat(2, () => {
+    act(() => jest.advanceTimersByTime(200));
+  });
+
+  expect(counterText).toHaveTextContent('2');
+
+  fireEvent.click(clearAllButton);
+
+  repeat(2, () => {
+    act(() => jest.advanceTimersByTime(200));
+  });
+
+  expect(counterText).toHaveTextContent('2');
+});
+
 test('Changing delay values restarts interval and timeout', () => {
   const { getByTestId, getByText } = render(<TestComponent />);
   const intervalButton = getByText(/interval/i);
