@@ -1,6 +1,6 @@
 {
   "name": "use-timeoutable-interval",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A react hook to schedule and clear timed functions declaratively",
   "repository": {
     "type": "git",
