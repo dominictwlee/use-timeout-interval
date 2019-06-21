@@ -40,6 +40,10 @@ export default function useTimeoutableInterval(intervalCb, iDelay, timeoutCb, tD
   }, [intervalCb]);
 
   useEffect(() => {
+    savedTimeoutCb.current = timeoutCb;
+  }, [timeoutCb]);
+
+  useEffect(() => {
     dispatch({ type: 'resetTimeOut' });
   }, [state.iDelay, state.tDelay]);
 
