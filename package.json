@@ -66,14 +66,12 @@
     "rimraf": "^2.6.3",
     "rollup": "^1.15.6",
     "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-babel-minify": "^8.0.0"
-  },
-  "peerDependencies": {
-    "react": "^16.8.0"
-  },
-  "dependencies": {
+    "rollup-plugin-babel-minify": "^8.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.8.0",
     "react-test-renderer": "^16.8.6"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0"
   }
 }
