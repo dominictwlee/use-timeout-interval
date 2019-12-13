@@ -35,6 +35,12 @@ export default function useTimeoutableInterval(intervalCb, iDelay, timeoutCb, tD
     dispatch({ type: 'clear' });
   }, []);
 
+  const restart = useCallback(() => {
+    dispatch({ type: 'clear' });
+    dispatch({ type: 'timeout', tDelay: state.tDelay });
+    dispatch({ type: 'interval', iDelay: state.iDelay });
+  }, [state.iDelay, state.tDelay]);
+
   useEffect(() => {
     savedIntervalCb.current = intervalCb;
   }, [intervalCb]);
@@ -77,5 +83,6 @@ export default function useTimeoutableInterval(intervalCb, iDelay, timeoutCb, tD
     timeoutDelay: state.tDelay,
     intervalDelay: state.iDelay,
     clearAll,
+    restart,
   };
 }
